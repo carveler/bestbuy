@@ -63,7 +63,8 @@ class Store:
                 active_products.append(item)
         return active_products
 
-    def order(self, shopping_list):
+    @staticmethod
+    def order(shopping_list):
         """
         Processes an order based on the provided shopping list
         and returns the total price of the order.
