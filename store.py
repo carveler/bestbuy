@@ -4,10 +4,12 @@ import products
 class Store:
     """
     The Store class represents a store that sells products.
-    It manages the inventory of products and provides methods to add, remove, and order products.
+    It manages the inventory of products and provides 
+    methods to add, remove, and order products.
 
     Attributes:
-    - list_products (list): A list of Product objects representing the products available in the store.
+    - list_products (list): A list of Product objects 
+    representing the products available in the store.
     """
 
     def __init__(self, list_products):
@@ -15,7 +17,8 @@ class Store:
         Initiator (constructor) method.
         Initializes the Store object with a list of products.
 
-        :param list_products: list - A list of Product objects representing the products available in the store.
+        :param list_products: list - A list of Product 
+        objects representing the products available in the store.
         """
         self.list_products = list_products
 
@@ -54,7 +57,8 @@ class Store:
         """
         Returns a list of all active products in the store.
 
-        :return: list - A list of Product objects representing all active products in the store.
+        :return: list - A list of Product objects representing 
+        all active products in the store.
         """
         active_products = []
         for item in self.products:
@@ -64,9 +68,11 @@ class Store:
 
     def order(self, shopping_list):
         """
-        Processes an order based on the provided shopping list and returns the total price of the order.
+        Processes an order based on the provided shopping list 
+        and returns the total price of the order.
 
-        :param shopping_list: list - A list of tuples where each tuple contains a Product object and the desired quantity.
+        :param shopping_list: list - A list of tuples where 
+        each tuple contains a Product object and the desired quantity.
         :return: float - The total price of the order.
         """
         total = 0
