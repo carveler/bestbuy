@@ -84,7 +84,8 @@ class Product:
         Buys a given quantity of the product.
         Returns the total price (float) of the purchase.
         Updates the quantity of the product.
-        Raises an exception if the quantity is not an integer, exceeds available stock, or is less than or equal to zero.
+        Raises an exception if the quantity is not an integer, 
+        exceeds available stock, or is less than or equal to zero.
 
         :param quantity: int - The quantity to buy.
         :return: float - The total price of the purchase.
