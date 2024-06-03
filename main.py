@@ -23,10 +23,11 @@ def show_menu():
 def ask_user():
     while True:
         user_input = input("Please choose a number: ")
-        if not user_input in ["1", "2", "3", "4"]:
+        if user_input in ["1", "2", "3", "4"]:
+            return int(user_input)
+        else:
             print("Error with your choice! Try again!")
-            continue
-        return int(user_input)
+       
 
 
 def start():
@@ -44,5 +45,3 @@ def start():
 
 if __name__ == "__main__":
     start()
-
-
