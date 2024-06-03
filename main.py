@@ -34,12 +34,12 @@ def start():
         show_menu()
         ask_user()
 
-    except ValueError as e:
-        print(e)
-    except TypeError as e:
-        print(e)
-    except Exception as e:
-        print(e)
+    except ValueError as error:
+        print(error)
+    except TypeError as error:
+        print(error)
+    except Exception as error:
+        print(error)
 
 
 if __name__ == "__main__":
