@@ -30,8 +30,16 @@ def ask_user():
 
 
 def start():
-    show_menu()
-    ask_user()
+    try:
+        show_menu()
+        ask_user()
+
+    except ValueError as e:
+        print(e)
+    except TypeError as e:
+        print(e)
+    except Exception as e:
+        print(e)
 
 
 if __name__ == "__main__":
