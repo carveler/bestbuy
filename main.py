@@ -1,12 +1,40 @@
 import products
 import store
 
-product_list = [products.Product("MacBook Air M2", price=1450, quantity=100),
-                products.Product("Bose QuietComfort Earbuds", price=250, quantity=500),
-                products.Product("Google Pixel 7", price=500, quantity=250),
-               ]
+product_list = [
+    products.Product("MacBook Air M2", price=1450, quantity=100),
+    products.Product("Bose QuietComfort Earbuds", price=250, quantity=500),
+    products.Product("Google Pixel 7", price=500, quantity=250),
+]
+best_buy = store.Store(product_list)
 
-store = store.Store(product_list)
-products = store.get_all_products()
-print(store.get_total_quantity())
-print(store.order([(products[0], 1), (products[1], 2)]))
+
+def show_menu():
+    print("   Store Menu")
+    print("   ----------")
+    print(
+        "1. List all products in store\n"
+        "2. Show total amount in store\n"
+        "3. Make an order\n"
+        "4. Quit\n"
+    )
+
+
+def ask_user():
+    while True:
+        user_input = input("Please choose a number: ")
+        if not user_input in ["1", "2", "3", "4"]:
+            print("Error with your choice! Try again!")
+            continue
+        return int(user_input)
+
+
+def start():
+    show_menu()
+    ask_user()
+
+
+if __name__ == "__main__":
+    start()
+
+
