@@ -10,6 +10,9 @@ best_buy = store.Store(product_list)
 
 
 def show_menu():
+    """
+    Show Store menu
+    """
     print("   Store Menu")
     print("   ----------")
     print(
@@ -21,16 +24,20 @@ def show_menu():
 
 
 def ask_user():
+    """
+    prompt user until gettig correct answer
+    """
     while True:
         user_input = input("Please choose a number: ")
         if user_input in ["1", "2", "3", "4"]:
             return int(user_input)
-        else:
-            print("Error with your choice! Try again!")
-       
+        print("Error with your choice! Try again!")
 
 
 def start():
+    """
+    start program
+    """
     try:
         show_menu()
         ask_user()
@@ -38,8 +45,6 @@ def start():
     except ValueError as error:
         print(error)
     except TypeError as error:
-        print(error)
-    except Exception as error:
         print(error)
 
 
