@@ -1,6 +1,3 @@
-import products
-
-
 class Store:
     """
     The Store class represents a store that sells products.
@@ -40,7 +37,7 @@ class Store:
         for item in self.products:
             if not product.name == item.name:
                 new_products.append(item)
-        self.products = new_products
+        self.list_products = new_products
 
     def get_total_quantity(self):
         """
@@ -62,7 +59,7 @@ class Store:
         """
         active_products = []
         for item in self.products:
-            if item.active == True:
+            if item.active is True:
                 active_products.append(item)
         return active_products
 
@@ -71,7 +68,7 @@ class Store:
         Processes an order based on the provided shopping list 
         and returns the total price of the order.
 
-        :param shopping_list: list - A list of tuples where 
+        :param shopping_list: list - A list of tuples where
         each tuple contains a Product object and the desired quantity.
         :return: float - The total price of the order.
         """
