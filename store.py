@@ -2,8 +2,8 @@ import products
 
 
 class Store:
-    def __init__(self, products):
-        self.products = products
+    def __init__(self, list_products):
+        self.list_products = list_products
 
     def add_product(self, product):
         '''
