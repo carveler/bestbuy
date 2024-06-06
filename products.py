@@ -41,11 +41,23 @@ class Product:
             raise ValueError("Product quantity cannot be negative.")
 
         self.name = name
-        self.price = float(price)
+        self._price = float(price)
         self._quantity = quantity
         self.active = True
         self._promotion = promotion
+        
+    @property
+    def price(self):
+        return self._price
 
+    @price.setter
+    def price(self, value):
+        if value < 0:
+            raise ValueError("Product price cannot be negative.")
+        if not isinstance(value, int):
+            raise TypeError("price has to be an integer.")
+        self._price = value
+        
     @property
     def promotion(self):
         return self._promotion
@@ -100,13 +112,15 @@ class Product:
         """
         self.active = False
 
-    def show(self):
+    def __str__(self):
         """
-        Prints the product details (name, price, quantity).
+        Prints the product details (name, price, quantity, promotion).
         """
-        print(f"Name:{self.name}, Price:{self.price}, Quantity:{self.quantity}")
-        if self.promotion:
-            print(f"Promotion:{self.promotion}")
+
+        return (
+            f"Name: {self.name}, Price: {self.price}, "
+            f"Quantity: {self.quantity}, Promotion: {self.promotion}"
+        )
 
     def buy(self, value):
         """
@@ -144,6 +158,21 @@ class Product:
         """
         self.promotion = promotion
 
+    def __lt__(self, other):
+        """
+        <  (less than)
+        """
+        return self.price < other.price
+
+    def __gt__(self, other):
+        """
+        > (greater than)
+        """
+        return self.price > other.price
+    
+    
+
+
 
 class NonStockedProduct(Product):
     """
@@ -161,14 +190,14 @@ class NonStockedProduct(Product):
     def quantity(self, value):
         raise AttributeError("NonStockedProduct quantity cannot be modified.")
 
-    def show(self):
+    def __str__(self):
         """
-        Prints the product details (name, price, quantity).
+        Prints the product details (name, price, quantity, promotion).
         """
 
-        print(
-            f"{self.name} (Non-Stocked), Price: {self.price}, "
-            f"Quantity: {self.quantity}"
+        return (
+            f"Name:{self.name}, Price:{self.price}, "
+            f"Quantity:{self.quantity}, Promotion:{self.promotion}"
         )
 
 
@@ -208,8 +237,7 @@ class LimitedProduct(Product):
         if value <= 0:
             raise ValueError("Quantity has to be greater than zero.")
         if value > self.maximum:
-            raise ValueError(f"{self.name} is limited to " 
-                             f"add max {self.maximum}.")
+            raise ValueError(f"{self.name} is limited to " f"add max {self.maximum}.")
         self.quantity -= value
         if self.promotion:
             if isinstance(self.promotion, PercentDiscount):
@@ -234,6 +262,15 @@ class Promotion(ABC):
     @abstractmethod
     def apply_promotion(self):
         pass
+
+    def __str__(self):
+        """
+        Prints the product promotion.
+        """
+        text = f"{self.name} "
+        if self.percent:
+            text += f"Percent: {self.percent}"
+        return text
 
 
 class SecondHalfPrice(Promotion):

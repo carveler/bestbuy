@@ -78,3 +78,9 @@ class Store:
             product_class, quantity = item
             total += product_class.buy(quantity)
         return total
+
+    def __contains__(self, item):
+        return item in self.list_products
+
+    def __add__(self, other):
+        return self.list_products + other.list_products
