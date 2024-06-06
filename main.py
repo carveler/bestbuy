@@ -121,6 +121,9 @@ def order_total():
 
     try:
         new_order = get_user_order()
+        print("-------------------------------------")
+        print("Your order: \n")
+        
         for item in new_order:
             product_chosen, user_quantity = item
             print(
@@ -128,7 +131,8 @@ def order_total():
                 f"${product_chosen.price} "
             )
         total = best_buy.order(new_order)
-        print(f"Order made! Total payment: ${total}")
+        print(f"\nOrder made! Total payment: ${total}")
+        print("-------------------------------------")
         return total
 
     except ValueError as val_err:
