@@ -300,11 +300,10 @@ class SecondHalfPrice(Promotion):
     every second product is half-price.
     """
 
-    @abstractmethod
     def apply_promotion(self, product, quantity):
         """
         Apply the second half-price promotion to the given product quantity.
-        
+
         :param self:
         :param product: The product to apply the promotion to.
         :param quantity: The quantity of the product being purchased.
@@ -320,7 +319,6 @@ class ThirdOneFree(Promotion):
     ThirdOneFree applies a promotion where every third product is free.
     """
 
-    @abstractmethod
     def apply_promotion(self, product, quantity):
         """
         Apply the third one free promotion to the given product quantity.
@@ -342,7 +340,6 @@ class PercentDiscount(Promotion):
     to the total price of the products.
     """
 
-    @abstractmethod
     def apply_promotion(self, product, quantity):
         """
         Apply the percentage discount to the total price of
