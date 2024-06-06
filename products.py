@@ -281,7 +281,7 @@ class Promotion(ABC):
         self.percent = percent
 
     @abstractmethod
-    def apply_promotion(self):
+    def apply_promotion(self, product, quantity):
         pass
 
     def __str__(self):
@@ -300,8 +300,8 @@ class SecondHalfPrice(Promotion):
     every second product is half-price.
     """
 
-    @staticmethod
-    def apply_promotion(product, quantity):
+    @abstractmethod
+    def apply_promotion(self, product, quantity):
         """
         Apply the second half-price promotion to the given product quantity.
 
@@ -319,11 +319,12 @@ class ThirdOneFree(Promotion):
     ThirdOneFree applies a promotion where every third product is free.
     """
 
-    @staticmethod
-    def apply_promotion(product, quantity):
+    @abstractmethod
+    def apply_promotion(self, product, quantity):
         """
         Apply the third one free promotion to the given product quantity.
 
+        :param self:
         :param product: The product to apply the promotion to.
         :param quantity: The quantity of the product being purchased.
         :return: float The total price after applying the promotion.
@@ -340,14 +341,15 @@ class PercentDiscount(Promotion):
     to the total price of the products.
     """
 
+    @abstractmethod
     def apply_promotion(self, product, quantity):
         """
         Apply the percentage discount to the total price of
         the given product quantity.
 
+        :param self:
         :param product: The product to apply the promotion to.
         :param quantity: The quantity of the product being purchased.
-        :param percent: The discount percentage to apply.
         :return: The total price after applying the discount.
         """
         return float(product.price * quantity * (1 - self.percent / 100))
