@@ -28,7 +28,7 @@ def test_buy():
     assert mac.quantity == 20
 
 
-def test_exceed_purchace():
+def test_exceed_purchase():
     mac = products.Product("MacBook Air M2", price=10, quantity=100)
     with pytest.raises(ValueError, match="Not enough stock available"):
         mac.buy(180)
@@ -50,7 +50,9 @@ def test_price_negative():
 
 
 def test_price_string():
-    with pytest.raises(TypeError, match="Price has to be an integer or float."):
+    with (pytest.raises(TypeError, match="Price has to be an integer or float"
+                                         ".")
+          ):
         products.Product("MacBook Air M2", price="10", quantity=100)
 
 
@@ -60,18 +62,21 @@ def test_quantity_int():
 
 
 def test_quantity_negative():
-    with pytest.raises(ValueError, match="Product quantity cannot be negative."):
+    with pytest.raises(ValueError, match="Product quantity cannot be negative."
+                                         ""):
         products.Product("MacBook Air M2", price=10, quantity=-100)
 
 
 def test_buy_zero():
-    with pytest.raises(ValueError, match="Quantity has to be greater than zero."):
+    with pytest.raises(ValueError, match="Quantity has to be greater than "
+                                         "zero."):
         mac = products.Product("MacBook Air M2", price=10, quantity=100)
         mac.buy(0)
 
 
 def test_buy_negative():
-    with pytest.raises(ValueError, match="Quantity has to be greater than zero."):
+    with pytest.raises(ValueError, match="Quantity has to be greater than"
+                                         "zero."):
         mac = products.Product("MacBook Air M2", price=10, quantity=100)
         mac.buy(-1)
 
@@ -105,7 +110,8 @@ def test_always_zero():
 
 
 def test_limited_product():
-    product = products.LimitedProduct("Shipping", price=10, quantity=250, maximum=1)
+    product = products.LimitedProduct("Shipping", price=10, quantity=250,
+                                      maximum=1)
     assert product.name == "Shipping"
     assert product.price == 10
     assert product.quantity == 250
@@ -122,12 +128,14 @@ def test_limit_exceed():
 
 def test_limit_quantity_not_enough():
     with pytest.raises(ValueError, match="Not enough stock available."):
-        shipping = products.LimitedProduct("Shipping", price=10, quantity=0, maximum=1)
+        shipping = products.LimitedProduct("Shipping", price=10,
+                                           quantity=0, maximum=1)
         shipping.buy(1)
 
 
 def test_limit_buy_zero():
-    with pytest.raises(ValueError, match="Quantity has to be greater than zero."):
+    with pytest.raises(ValueError, match="Quantity has to be greater than "
+                                         "zero."):
         shipping = products.LimitedProduct(
             "Shipping", price=10, quantity=250, maximum=1
         )
@@ -135,7 +143,8 @@ def test_limit_buy_zero():
 
 
 def test_limit_buy_negative():
-    with pytest.raises(ValueError, match="Quantity has to be greater than zero."):
+    with pytest.raises(ValueError, match="Quantity has to be greater than "
+                                         "zero."):
         shipping = products.LimitedProduct(
             "Shipping", price=10, quantity=250, maximum=1
         )
@@ -151,7 +160,8 @@ def test_limit_buy_exceed():
 
 
 def test_limit_buy():
-    shipping = products.LimitedProduct("Shipping", price=10, quantity=150, maximum=1)
+    shipping = products.LimitedProduct("Shipping", price=10, quantity=150,
+                                       maximum=1)
     assert shipping.buy(1) == 10.0
     assert shipping.quantity == 149
 
