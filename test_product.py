@@ -113,7 +113,7 @@ def test_limited_product():
 
 
 def test_limit_exceed():
-    with pytest.raises(ValueError, match="Shipping is limted to add max 1."):
+    with pytest.raises(ValueError, match="Shipping is limited to add max 1."):
         shipping = products.LimitedProduct(
             "Shipping", price=10, quantity=250, maximum=1
         )
