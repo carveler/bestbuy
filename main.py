@@ -121,6 +121,12 @@ def order_total():
 
     try:
         new_order = get_user_order()
+        for item in new_order:
+            product_chosen, user_quantity = item
+            print(
+                f"{user_quantity} x {product_chosen.name}: "
+                f"${product_chosen.price} "
+            )
         total = best_buy.order(new_order)
         print(f"Order made! Total payment: ${total}")
         return total
