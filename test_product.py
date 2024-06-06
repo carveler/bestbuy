@@ -13,7 +13,7 @@ def test_inactive():
     mac = products.Product("MacBook Air M2", price=1000, quantity=100)
     mac.buy(100)
     assert mac.quantity == 0
-    assert mac.active == False
+    assert mac.active is False
 
 
 def test_quantity():
