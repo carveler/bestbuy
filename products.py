@@ -304,7 +304,8 @@ class SecondHalfPrice(Promotion):
     def apply_promotion(self, product, quantity):
         """
         Apply the second half-price promotion to the given product quantity.
-
+        
+        :param self:
         :param product: The product to apply the promotion to.
         :param quantity: The quantity of the product being purchased.
         :return: The total price after applying the promotion.
