@@ -257,7 +257,8 @@ class LimitedProduct(Product):
         if value <= 0:
             raise ValueError("Quantity has to be greater than zero.")
         if value > self.maximum:
-            raise ValueError(f"{self.name} is limited to " f"add max {self.maximum}.")
+            raise ValueError(f"{self.name} is limited to " 
+                             f"add max {self.maximum}.")
         self.quantity -= value
         if self.promotion:
             if isinstance(self.promotion, PercentDiscount):
