@@ -42,10 +42,10 @@ def start():
         show_menu()
         ask_user()
 
-    except ValueError as error:
-        print(error)
-    except TypeError as error:
-        print(error)
+    except ValueError as val_err:
+        print(val_err)
+    except TypeError as type_err:
+        print(type_err)
 
 
 product_list = [ products.Product("MacBook Air M2", price=1450, quantity=100),
