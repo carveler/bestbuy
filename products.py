@@ -1,3 +1,6 @@
+from abc import ABC, abstractmethod
+
+
 class Product:
     """
     The Product class represents a specific type of product available
@@ -6,7 +9,13 @@ class Product:
     including its name, price, quantity, and status (active or not).
     """
 
-    def __init__(self, name, price, quantity=0):
+    def __init__(
+        self,
+        name,
+        price,
+        quantity=0,
+        promotion=None,
+    ):
         """
         Initiator (constructor) method.
         Creates the instance variables (active is set to True).
@@ -16,6 +25,7 @@ class Product:
         :param name: str - The name of the product.
         :param price: float or int - The price of the product.
         :param quantity: int - The quantity of the product.
+        :param promotion: Promotion - The promotion to apply to the product
         """
         if not name:
             raise ValueError("Product name cannot be empty.")
@@ -34,6 +44,17 @@ class Product:
         self.price = float(price)
         self._quantity = quantity
         self.active = True
+        self._promotion = promotion
+
+    @property
+    def promotion(self):
+        return self._promotion
+
+    @promotion.setter
+    def promotion(self, value):
+        if not isinstance(value, Promotion) and value is not None:
+            raise TypeError("Promotion has to be of type Promotion or None.")
+        self._promotion = value
 
     @property
     def quantity(self):
@@ -83,7 +104,9 @@ class Product:
         """
         Prints the product details (name, price, quantity).
         """
-        print(f"{self.name}, {self.price}, {self.quantity}")
+        print(f"Name:{self.name}, Price:{self.price}, Quantity:{self.quantity}")
+        if self.promotion:
+            print(f"Promotion:{self.promotion}")
 
     def buy(self, value):
         """
@@ -103,7 +126,23 @@ class Product:
         if value <= 0:
             raise ValueError("Quantity has to be greater than zero.")
         self.quantity -= value
-        return self.price * value
+        if self.promotion:
+            if isinstance(self.promotion, PercentDiscount):
+                return self.promotion.apply_promotion(
+                    self, value, self.promotion.percent
+                )
+            else:
+                return self.promotion.apply_promotion(self, value)
+        else:
+            return self.price * value
+
+    def set_promotion(self, promotion):
+        """
+        Sets the promotion for the product.
+
+        :param promotion: Promotion - The promotion to apply to the product.
+        """
+        self.promotion = promotion
 
 
 class NonStockedProduct(Product):
@@ -169,7 +208,88 @@ class LimitedProduct(Product):
         if value <= 0:
             raise ValueError("Quantity has to be greater than zero.")
         if value > self.maximum:
-            raise ValueError(f"{self.name} is limited to "
+            raise ValueError(f"{self.name} is limited to " 
                              f"add max {self.maximum}.")
         self.quantity -= value
-        return self.price * value
+        if self.promotion:
+            if isinstance(self.promotion, PercentDiscount):
+                return self.promotion.apply_promotion(
+                    self, value, self.promotion.percent
+                )
+            else:
+                return self.promotion.apply_promotion(self, value)
+        else:
+            return self.price * value
+
+
+class Promotion(ABC):
+    """
+    instance variable (member) for name, and only one method:
+    """
+
+    def __init__(self, name, percent=None):
+        self.name = name
+        self.percent = percent
+
+    @abstractmethod
+    def apply_promotion(self):
+        pass
+
+
+class SecondHalfPrice(Promotion):
+    """
+    SecondHalfPrice applies a promotion where
+    every second product is half-price.
+    """
+
+    @staticmethod
+    def apply_promotion(product, quantity):
+        """
+        Apply the second half-price promotion to the given product quantity.
+
+        :param product: The product to apply the promotion to.
+        :param quantity: The quantity of the product being purchased.
+        :return: The total price after applying the promotion.
+        """
+        pair = quantity // 2
+        reminder = quantity % 2
+        return float(product.price * pair * 1.5 + product.price * reminder)
+
+
+class ThirdOneFree(Promotion):
+    """
+    ThirdOneFree applies a promotion where every third product is free.
+    """
+
+    @staticmethod
+    def apply_promotion(product, quantity):
+        """
+        Apply the third one free promotion to the given product quantity.
+
+        :param product: The product to apply the promotion to.
+        :param quantity: The quantity of the product being purchased.
+        :return: float The total price after applying the promotion.
+        """
+
+        three_pair = quantity // 3
+        reminder = quantity % 3
+        return float(product.price * three_pair * 2 + product.price * reminder)
+
+
+class PercentDiscount(Promotion):
+    """
+    PercentDiscount applies a percentage discount
+    to the total price of the products.
+    """
+
+    def apply_promotion(self, product, quantity):
+        """
+        Apply the percentage discount to the total price of
+        the given product quantity.
+
+        :param product: The product to apply the promotion to.
+        :param quantity: The quantity of the product being purchased.
+        :param percent: The discount percentage to apply.
+        :return: The total price after applying the discount.
+        """
+        return float(product.price * quantity * (1 - self.percent / 100))
