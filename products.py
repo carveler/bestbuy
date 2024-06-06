@@ -45,7 +45,7 @@ class Product:
         self._quantity = quantity
         self.active = True
         self._promotion = promotion
-        
+
     @property
     def price(self):
         return self._price
@@ -57,7 +57,7 @@ class Product:
         if not isinstance(value, int):
             raise TypeError("price has to be an integer.")
         self._price = value
-        
+
     @property
     def promotion(self):
         return self._promotion
@@ -169,9 +169,6 @@ class Product:
         > (greater than)
         """
         return self.price > other.price
-    
-    
-
 
 
 class NonStockedProduct(Product):
@@ -199,6 +196,29 @@ class NonStockedProduct(Product):
             f"Name:{self.name}, Price:{self.price}, "
             f"Quantity:{self.quantity}, Promotion:{self.promotion}"
         )
+
+    def buy(self, value):
+        """
+        Buys a given quantity of the product.
+        Returns the total price (float) of the purchase.
+        Updates the quantity of the product.
+        Raises an exception if the quantity is not an integer,
+        exceeds available stock, or is less than or equal to zero.
+
+        :param value: int - The quantity to buy.
+        :return: float - The total price of the purchase.
+        """
+        if not isinstance(value, int):
+            raise TypeError("Quantity has to be an integer.")
+        if value <= 0:
+            raise ValueError("Quantity has to be greater than zero.")
+        if self.promotion:
+            if isinstance(self.promotion, PercentDiscount):
+                return self.promotion.apply_promotion(self, value)
+            else:
+                return self.promotion.apply_promotion(self, value)
+        else:
+            return self.price * value
 
 
 class LimitedProduct(Product):
