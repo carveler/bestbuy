@@ -27,10 +27,10 @@ class Product:
         :param quantity: int - The quantity of the product.
         :param promotion: Promotion - The promotion to apply to the product
         """
-        if not name:
-            raise ValueError("Product name cannot be empty.")
         if not isinstance(name, str):
             raise TypeError("Name has to be a string.")
+        if not name:
+            raise ValueError("Product name cannot be empty.")
         if not isinstance(price, (int, float)):
             raise TypeError("Price has to be an integer or float.")
         if price < 0:
@@ -84,12 +84,12 @@ class Product:
 
     def get_quantity(self):
         """
-        get_quantity(self) -> float
+        get_quantity(self)
         Getter function for quantity.
-        Returns the quantity (float).
-        :return: float - The quantity of the product.
+        Returns the quantity (int).
+        :return: int - The quantity of the product.
         """
-        return float(self.quantity)
+        return self.quantity
 
     def is_active(self):
         """

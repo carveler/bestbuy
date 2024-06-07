@@ -17,6 +17,10 @@ class Store:
         :param list_products: list - A list of Product
         objects representing the products available in the store.
         """
+        if not list_products:
+            raise ValueError("The list of products cannot be empty.")
+        if not isinstance(list_products, list):
+            raise TypeError("The list of products must be a list.")
         self.list_products = list_products
 
     def add_product(self, product):
@@ -33,10 +37,7 @@ class Store:
 
         :param product: Product - The Product object to remove from the store.
         """
-        new_products = []
-        for item in self.list_products:
-            if not product.name == item.name:
-                new_products.append(item)
+        new_products = [item for item in self.list_products if item.name != product.name]
         self.list_products = new_products
 
     def get_total_quantity(self):
@@ -45,11 +46,8 @@ class Store:
 
         :return: int - The total quantity of items in the store.
         """
-        total_quantity = 0
-        for item in self.list_products:
-            total_quantity += item.quantity
-        return total_quantity
-
+        return sum(product.get_quantity() for product in self.list_products)
+    
     def get_all_products(self):
         """
         Returns a list of all active products in the store.
@@ -75,8 +73,8 @@ class Store:
         """
         total = 0
         for item in shopping_list:
-            product_class, quantity = item
-            total += product_class.buy(quantity)
+            product_instance, quantity = item
+            total += product_instance.buy(quantity)
         return total
 
     def __contains__(self, item):
